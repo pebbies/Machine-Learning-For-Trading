@@ -91,7 +91,7 @@ def figure1(win_prob):
     for index, sim in enumerate(simulations):
         plt.plot(x_coordinates, sim, label = "simulation " + str(index+1))
 
-    plt.title("Figure 1: Simple Roulette Winnings for 10 Episodes")
+    plt.title("Fig 1: Roulette Winnings for 10 Episodes Unlimited Bankroll")
     plt.xlabel("Spin #")
     plt.ylabel("Episode Winnings")
     plt.xlim([0, 300])
@@ -111,7 +111,7 @@ def figure2(win_prob):
     plt.plot(x_coordinates, mean_plus_std, label="Mean + Std Dev")
     plt.plot(x_coordinates, mean_minus_std, label="Mean - Std Dev")
 
-    plt.title("Figure 2: Mean Winnings Per Spin Across 1000 Episodes")
+    plt.title("Fig 2: Mean Winnings Per Spin Across 1000 Episodes Unlimited Bankroll")
     plt.xlabel("Spin #")
     plt.ylabel("Winnings")
     plt.xlim([0, 300])
@@ -131,7 +131,7 @@ def figure3(win_prob):
     plt.plot(x_coordinates, median_plus_std, label="Median + Std Dev")
     plt.plot(x_coordinates, median_minus_std, label="Median - Std Dev")
 
-    plt.title("Figure 3: Median Winnings Per Spin Across 1000 Episodes")
+    plt.title("Fig 3: Median Winnings Per Spin Across 1000 Episodes Unlimited Bankroll")
     plt.xlabel("Spin #")
     plt.ylabel("Winnings")
     plt.xlim([0, 300])
@@ -152,7 +152,7 @@ def figure4(win_prob):
     plt.plot(x_coordinates, mean_plus_std, label="Mean + Std Dev")
     plt.plot(x_coordinates, mean_minus_std, label="Mean - Std Dev")
 
-    plt.title("Figure 4: Mean Winnings Per Spin Across 1000 Episodes With Capped Bankroll")
+    plt.title("Fig 4: Mean Winnings Per Spin Across 1000 Episodes Capped Bankroll")
     plt.xlabel("Spin #")
     plt.ylabel("Winnings")
     plt.xlim([0, 300])
@@ -172,7 +172,7 @@ def figure5(win_prob):
     plt.plot(x_coordinates, median_plus_std, label="Median + Std Dev")
     plt.plot(x_coordinates, median_minus_std, label="Median - Std Dev")
 
-    plt.title("Figure 5: Median Winnings Per Spin Across 1000 Episodes With Capped Bankroll")
+    plt.title("Fig 5: Median Winnings Per Spin Across 1000 Episodes Capped Bankroll")
     plt.xlabel("Spin #")
     plt.ylabel("Winnings")
     plt.xlim([0, 300])
