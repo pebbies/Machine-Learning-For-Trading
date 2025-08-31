@@ -71,12 +71,10 @@ def test_code():
 
   	#Experiment 1
     figure1(win_prob)
-    figure2(win_prob)
-    figure3(win_prob)
+    figure2and3(win_prob)
 
     #Experiment 2
-    figure4(win_prob)
-    figure5(win_prob)
+    figure4and5(win_prob)
 
 def figure1(win_prob):
     num_simulations = 10
@@ -100,12 +98,13 @@ def figure1(win_prob):
 
     plt.savefig("figure1.png")
     plt.close()
-
-def figure2(win_prob):
+    
+def figure2and3(win_prob):
     x_limit = 1001
     x_coordinates = range(x_limit)
 
-    mean, mean_plus_std, mean_minus_std = generate_mean(win_prob)
+    simulations = generate_data(win_prob)
+    mean, mean_plus_std, mean_minus_std = generate_mean(simulations)
     
     plt.plot(x_coordinates, mean, label="Mean")
     plt.plot(x_coordinates, mean_plus_std, label="Mean + Std Dev")
@@ -121,11 +120,9 @@ def figure2(win_prob):
     plt.savefig("figure2.png")
     plt.close()
 
-def figure3(win_prob):
-    x_limit = 1001
-    x_coordinates = range(x_limit)
+    plt.figure(figsize=(8, 5))
 
-    median, median_plus_std, median_minus_std = generate_median(win_prob)
+    median, median_plus_std, median_minus_std = generate_median(simulations)
 
     plt.plot(x_coordinates, median, label="Median")
     plt.plot(x_coordinates, median_plus_std, label="Median + Std Dev")
@@ -137,16 +134,16 @@ def figure3(win_prob):
     plt.xlim([0, 300])
     plt.ylim([-256, 100])
     plt.legend(loc="best")
-    
+
     plt.savefig("figure3.png")
     plt.close()
 
-
-def figure4(win_prob):
+def figure4and5(win_prob):
     x_limit = 1001
     x_coordinates = range(x_limit)
 
-    mean, mean_plus_std, mean_minus_std = generate_mean(win_prob, True)
+    simulations = generate_data(win_prob, True)
+    mean, mean_plus_std, mean_minus_std = generate_mean(simulations)
 
     plt.plot(x_coordinates, mean, label="Mean")
     plt.plot(x_coordinates, mean_plus_std, label="Mean + Std Dev")
@@ -162,11 +159,12 @@ def figure4(win_prob):
     plt.savefig("figure4.png")
     plt.close()
 
-def figure5(win_prob):
+    plt.figure(figsize=(8, 5))
+
     x_limit = 1001
     x_coordinates = range(x_limit)
 
-    median, median_plus_std, median_minus_std = generate_median(win_prob, True)
+    median, median_plus_std, median_minus_std = generate_median(simulations)
 
     plt.plot(x_coordinates, median, label="Median")
     plt.plot(x_coordinates, median_plus_std, label="Median + Std Dev")
@@ -182,13 +180,16 @@ def figure5(win_prob):
     plt.savefig("figure5.png")
     plt.close()
 
-def generate_mean(win_prob, realistic = False):
+def generate_data(win_prob, realistic = False):
     simulations = []
     num_simulations = 1000
 
     while len(simulations) < num_simulations:
         simulations.append(strategy(win_prob, realistic))
 
+    return simulations
+
+def generate_mean(simulations):
     mean = np.mean(simulations, axis=0)
     std = np.std(simulations, axis=0)
 
@@ -198,13 +199,7 @@ def generate_mean(win_prob, realistic = False):
     return mean, mean_plus_std, mean_minus_std
 
 
-def generate_median(win_prob, realistic = False):
-    simulations = []
-    num_simulations = 1000
-
-    while len(simulations) < num_simulations:
-        simulations.append(strategy(win_prob, realistic))
-
+def generate_median(simulations):
     median = np.median(simulations, axis=0)
     std = np.std(simulations, axis=0)
 
@@ -250,4 +245,4 @@ def strategy(win_prob, realistic = False):
     return np.array(winnings_per_spin)
 
 if __name__ == "__main__":  		  	   		 	 	 		  		  		    	 		 		   		 		  
-    test_code()  		  	   		 	 	 		  		  		    	 		 		   		 		  
+    test_code()  		  	
