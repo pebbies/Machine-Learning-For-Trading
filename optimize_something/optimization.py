@@ -84,27 +84,29 @@ def optimize_portfolio(
 
     minimizer = spo.minimize(sr_func, x0 = allocs, method = "SLSQP", bounds = bounds, constraints = constraints)
 
-    print(minimizer)
+    # print(minimizer)
 
     allocs = minimizer.x
 
-    # Get daily portfolio value
-    port_val = prices_SPY
-
-    if gen_plot:
-        # add code to plot here
-        df_temp = pd.concat(
-            [port_val, prices_SPY], keys=["Portfolio", "SPY"], axis=1
-        )
-        pass
-
     daily_port_values = compute_daily_port_values(prices, allocs)
     daily_returns = compute_daily_returns(daily_port_values)
-    print(daily_returns[-1], daily_returns[0])
     cr = daily_port_values[-1] / daily_port_values[0] - 1
     adr = daily_returns.mean()
     sddr = daily_returns.std()
     sr = compute_sr(daily_returns)
+
+    if gen_plot:
+        normalized_SPY = prices_SPY / prices_SPY.iloc[0]
+        df_temp = pd.concat(
+            [daily_port_values, normalized_SPY], keys=["Portfolio", "SPY"], axis=1
+        )
+        df_temp.plot(title = "Daily Performance of SPY vs Optimized Portfolio")
+        plt.xlabel("Date")
+        plt.ylabel("Normalized Price")
+        plt.savefig("figure1.png")
+
+        plt.close()
+
     return allocs, cr, adr, sddr, sr
 
 def compute_daily_port_values(prices, allocs):
@@ -147,8 +149,15 @@ def test_code():
     print(f"Average Daily Return: {adr}")  		  	   		 	 	 		  		  		    	 		 		   		 		  
     print(f"Cumulative Return: {cr}")  		  	   		 	 	 		  		  		    	 		 		   		 		  
   		  	   		 	 	 		  		  		    	 		 		   		 		  
-  		  	   		 	 	 		  		  		    	 		 		   		 		  
-if __name__ == "__main__":  		  	   		 	 	 		  		  		    	 		 		   		 		  
-    # This code WILL NOT be called by the auto grader  		  	   		 	 	 		  		  		    	 		 		   		 		  
-    # Do not assume that it will be called  		  	   		 	 	 		  		  		    	 		 		   		 		  
-    test_code()  		  	   		 	 	 		  		  		    	 		 		   		 		  
+def test_report():
+    start_date = dt.datetime(2008, 6, 1)
+    end_date = dt.datetime(2009, 6, 1)
+    symbols = ["IBM", "X", "GLD", "JPM"]
+    allocations, cr, adr, sddr, sr = optimize_portfolio(sd = start_date, ed=end_date, syms=symbols, gen_plot=True)
+
+if __name__ == "__main__":
+    # This code WILL NOT be called by the auto grader
+    # Do not assume that it will be called
+    # test_code()
+    test_report()
+
